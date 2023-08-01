@@ -1,0 +1,11 @@
+codeally@f720efeced39:~/project$ psql --username=freecodecamp --dbname=postgres
+Border style is 2.
+Pager usage is off.
+psql (12.9 (Ubuntu 12.9-2.pgdg20.04+1))
+Type "help" for help.
+
+postgres=> CREATE DATABASE universe;
+CREATE DATABASE
+postgres=> \c universe;
+You are now connected to database "universe" as user "freecodecamp".
+universe=> 
