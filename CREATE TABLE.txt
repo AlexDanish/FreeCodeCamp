@@ -1,0 +1,198 @@
+psql --username=freecodecamp --dbname=postgres
+
+CREATE DATABASE universe;
+
+\c universe;
+
+CREATE TABLE galaxy
+ (galaxy_id SERIAL PRIMARY KEY NOT NULL,
+ name VARCHAR(30) UNIQUE,
+ speed_kms INT NOT NULL,
+ size_tly INT NOT NULL,
+ stars NUMERIC,
+ description TEXT,
+ spiral BOOLEAN,
+ black_hole BOOLEAN);
+
+INSERT INTO galaxy (name, speed_kms, size_tly, description,
+ spiral, black_hole) VALUES ('azara', 200, 300, 'Elliptical Galaxies', false, true);
+
+INSERT INTO galaxy (name, speed_kms, size_tly, description, 
+spiral, black_hole) VALUES ('bylak', 250, 320, 'Spiral galaxies', true, true);
+
+INSERT INTO galaxy (name, speed_kms, size_tly, description, 
+spiral, black_hole) VALUES ('celin', 270, 310, 'Spiral galaxies',
+true, false);
+
+INSERT INTO galaxy (name, speed_kms, size_tly, description, 
+spiral, black_hole) VALUES ('dalis', 220, 350, 'Lenticular galaxies',
+false, false);
+
+INSERT INTO galaxy (name, speed_kms, size_tly, description, 
+spiral, black_hole) VALUES ('edgal', 210, 330, 'Spiral galaxies',
+true, false);
+
+INSERT INTO galaxy (name, speed_kms, size_tly, description, 
+spiral, black_hole) VALUES ('feraly', 210, 330, 'Elliptical Galaxies',
+false, true);
+
+select * from galaxy;
+
+CREATE TABLE star
+ (star_id SERIAL PRIMARY KEY NOT NULL,
+ name VARCHAR(30) UNIQUE,
+ galaxy_id int,
+ CONSTRAINT fk_galaxy FOREIGN KEY (galaxy_id) REFERENCES galaxy (galaxy_id),
+ speed_kms INT NOT NULL,
+ size_mkm INT NOT NULL,
+ planets NUMERIC,
+ description TEXT,
+ neutron BOOLEAN,
+ double BOOLEAN);
+
+INSERT INTO star (name, galaxy_id, speed_kms, size_mkm, planets, description, neutron, double) VALUES ('galas', 1, 250, 280, 15, 'Yellow dwarfs', false, false);
+
+INSERT INTO star (name, galaxy_id, speed_kms, size_mkm, planets, description, neutron, double) VALUES ('ketla', 2, 280, 300, 21, 'White dwarfs', false, true);
+
+INSERT INTO star (name, galaxy_id, speed_kms, size_mkm, planets, description, neutron, double) VALUES ('laura', 3, 210, 350, 22, 'Neutron stars', true, false);
+
+INSERT INTO star (name, galaxy_id, speed_kms, size_mkm, planets, description, neutron, double) VALUES ('melody', 4, 250, 240, 12, 'Neutron stars', true, false);
+
+INSERT INTO star (name, galaxy_id, speed_kms, size_mkm, planets, description, neutron, double) VALUES ('nargus', 5, 370, 300, 25, 'giant stars', false, false);
+
+INSERT INTO star (name, galaxy_id, speed_kms, size_mkm, planets, description, neutron, double) VALUES ('opera', 6, 230, 2500, 11, 'White dwarfs', false, true);
+
+select * from star;
+
+CREATE TABLE planet
+ (planet_id SERIAL PRIMARY KEY NOT NULL,
+ name VARCHAR(30) UNIQUE,
+ star_id int,
+ CONSTRAINT fk_star FOREIGN KEY(star_id) REFERENCES star(star_id),
+ speed_kmh INT NOT NULL,
+ radius_tkm INT NOT NULL,
+ moons NUMERIC,
+ description TEXT,
+ belt BOOLEAN,
+ atmosphere BOOLEAN);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('paragra', 1, 107, 6, 1, 'Terrestrial', false, true);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('radar', 1, 120, 8, 3, 'Terrestrial', false, false);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('seryn', 2, 150, 150, 10, 'Gaseous', true, true);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('taronta', 2, 130, 140, 12, 'Gaseous', false, true);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('porto', 3, 110, 120, 15, 'Gaseous', false, true);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('ridyk', 3, 100, 9, 2, 'Terrestrial', true, false);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('sadyn', 4, 140, 130, 11, 'Gaseous', false, true);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('turi', 4, 110, 7, 1, 'Terrestrial', false, true);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('utri', 5, 110, 10, 2, 'Terrestrial', false, false);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('ustan', 5, 120, 7, 1, 'Terrestrial', false, true);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('fadyn', 6, 140, 120, 15, 'Gaseous', false, true);
+
+INSERT INTO planet (name, star_id, speed_kmh, radius_tkm, moons, description, belt, atmosphere) VALUES ('fustany', 6, 120, 8, 3, 'Terrestrial', false, true);
+
+select * from planet;
+
+CREATE TABLE moon
+ (moon_id SERIAL PRIMARY KEY NOT NULL,
+ name VARCHAR(30) UNIQUE,
+ planet_id int,
+ CONSTRAINT fk_planet FOREIGN KEY(planet_id) REFERENCES planet(planet_id),
+ speed INT NOT NULL,
+ radius INT NOT NULL,
+ craters NUMERIC,
+ description TEXT,
+ moons BOOLEAN,
+ atmosphere BOOLEAN);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('hany', 1, 80, 1200, 356, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('hugy', 1, 80, 1200, 346, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('jira', 2, 80, 1100, 256, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('jula', 2, 75, 1300, 456, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('ysla', 3, 75, 1300, 456, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('hrany', 4, 80, 1200, 356, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('hlugy', 4, 80, 1200, 346, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('jyira', 5, 80, 1100, 256, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('jrula', 5, 75, 1300, 456, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('ywsla', 6, 75, 1300, 456, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('ahany', 6, 80, 1200, 356, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('ahugy', 7, 80, 1200, 346, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('ajira', 7, 80, 1100, 256, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('ajula', 8, 75, 1300, 456, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('aysla', 8, 75, 1300, 456, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('bhany', 9, 80, 1200, 356, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('bhugy', 9, 80, 1200, 346, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('bjira', 10, 80, 1100, 256, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('bjula', 10, 75, 1300, 456, 'Terrestrial', false, false);
+
+INSERT INTO moon (name, planet_id, speed, radius, craters, description, moons, atmosphere) VALUES ('bysla', 11, 75, 1300, 456, 'Terrestrial', false, false);
+
+select * from moon;
+
+CREATE TABLE comet
+ (comet_id SERIAL PRIMARY KEY NOT NULL,
+ name VARCHAR(30) UNIQUE,
+ star_id int,
+ CONSTRAINT fk_star FOREIGN KEY(star_id) REFERENCES star(star_id),
+ speed_tkmh INT NOT NULL,
+ radius_km INT NOT NULL,
+ cycle NUMERIC,
+ description TEXT,
+ tail BOOLEAN,
+ metal BOOLEAN);
+
+INSERT INTO comet (name, star_id, speed_tkmh, radius_km, cycle, description, tail, metal) VALUES ('zoron', 1, 140, 5, 150, 'old', true, true);
+
+INSERT INTO comet (name, star_id, speed_tkmh, radius_km, cycle, description, tail, metal) VALUES ('xyom', 2, 150, 3, 110, 'old', true, true);
+
+INSERT INTO comet (name, star_id, speed_tkmh, radius_km, cycle, description, tail, metal) VALUES ('xiomy', 3, 150, 2, 110, 'new', true, true);
+
+select * from comet;
+
+
+pg_dump -cC --inserts -U freecodecamp universe > universe.sql
+
+git remote add main git@github.com:AlexDanish/FreeCodeCamp.git
+
+git add .
+
+git commit -m "database universe"
+
+git push -u main master
+
+https://github.com/AlexDanish/FreeCodeCamp/blob/main/universe.sql
+
+
+
+
+
+
+
+
